@@ -1,0 +1,13 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    border-radius: 15px;
+    height: 85vh;
+}
+  
+.navbar span {
+    margin-bottom: 10px;
+    font-size: 18px;
+}

@@ -1,0 +1,101 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    height: 82vh;
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .main-header {
+    font-size: 24px;
+  }
+  
+  .container-for-task {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 25px;
+  }
+  
+  .task-container {
+    border-radius: 10px;
+    flex: 1;
+    border: 1px solid #444444;
+  }
+  
+  .task-container-header {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 50%;
+  }
+  
+  .task {
+    display: flex;
+    align-items: center;
+    background: violet;
+    border-radius: 6px;
+    padding: 0 15px;
+    min-height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  
+  
+  
+  /* Dragula CSS Release 3.2.0 from: https://github.com/bevacqua/dragula */
+  
+  .gu-mirror{
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=100);
+    cursor: grab;
+    background: wheat;
+    box-shadow: -5px 7px 34px 7px rgba(249, 149, 87, 1);
+    border-radius: 8px;
+  }
+    
+  .gu-mirror.spanText{
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=100);
+    cursor: grab;
+    box-shadow: -5px 7px 34px 7px rgba(249, 149, 87, 1);
+    border-radius: 8px;
+  }
+    
+  .gu-hide {
+    display: none !important;
+  }
+    
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+    
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }

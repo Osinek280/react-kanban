@@ -1,13 +1,63 @@
 .navbar {
     display: flex;
     flex-direction: column;
+    gap: 20px;
     align-items: flex-start;
     color: white;
     border-radius: 15px;
     height: 85vh;
+    position: relative;
 }
-  
-.navbar span {
-    margin-bottom: 10px;
-    font-size: 18px;
+
+.navbar .icon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 25px;
+    font-weight: 700;
+    font-size: 25px;
+    position: relative;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#tool-tip-text {
+    position: absolute;
+    left: 130%;
+    background: #2b2b2b;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    display: none;
+}
+
+.navbar .icon:hover #tool-tip-text {
+    display: block;
+}
+
+
+.my-icon {
+    font-size: 25px;
+}
+
+.resize-btn {
+    position: absolute;
+    top: 25%;
+    right: 0;
+    transform: translateX(105%);
+    background: #007bff;
+    border: none;
+    outline: none;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.arrow-btn-icon {
+    color: whitesmoke;
+    transform: translateY(5%);
 }

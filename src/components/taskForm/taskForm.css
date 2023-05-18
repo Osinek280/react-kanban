@@ -1,0 +1,82 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+}
+
+.form {
+    margin-top: 160px;
+    width: 450px;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-18%);
+}
+  
+.form-heading {
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+  
+.form-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+  
+.form-input,
+.form-textarea,
+.form-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: none;
+}
+  
+.form-textarea {
+    height: 100px;
+}
+  
+.subtasks-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.subtask-input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+  
+.form-submit-button, .add-subtask-button {
+    background-color: #635fc7;
+    color: #fff;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form-submit-button {
+    margin-top: 20px;
+}

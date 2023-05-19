@@ -5,7 +5,7 @@ const SectionContext = createContext();
 const SectionProvider = ({ children }) => {
   const [section, setSection] = useState([ 'To do', 'In progress', 'Done' ]);
 
-  const replaceTask = (TaskArray) => {
+  const replaceSection = (TaskArray) => {
     setSection(TaskArray)
   };
 
@@ -13,7 +13,7 @@ const SectionProvider = ({ children }) => {
 
   return (
     <SectionContext.Provider
-      value={{ section, replaceTask }}
+      value={{ section, replaceSection }}
     >
       {children}
     </SectionContext.Provider>

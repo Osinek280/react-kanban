@@ -29,17 +29,6 @@ function AddEditTaskModal({ onClose, argument }) {
 
   const [subtaskContainers, setSubtaskContainers] = useState([{}]);
 
-  const addSubtaskContainer = () => {
-    setSubtaskContainers([...subtaskContainers, {}]);
-  };
-
-  const removeSubtaskContainer = (index) => {
-    const updatedSubtaskContainers = subtaskContainers.filter(
-      (_, i) => i !== index
-    );
-    setSubtaskContainers(updatedSubtaskContainers);
-  };
-
   const closeFromClick = (e) => {
     if(e.target.className === 'form-container') {
       onClose()
@@ -100,20 +89,20 @@ function AddEditTaskModal({ onClose, argument }) {
         {/* Subtasks */}
         <div className="form-group">
       <label className="form-label">Subtasks</label>
-      {subtaskContainers.map((_, index) => (
-        <div key={index} className="subtasks-container">
-          <input
-            type="text"
-            className="form-input subtask-input"
-            placeholder="e.g Take coffee break"
-          />
-          <FontAwesomeIcon
-            icon={faTimes}
-            onClick={() => removeSubtaskContainer(index)}
-          />
-        </div>
-      ))}
-      <button className="add-subtask-button" onClick={addSubtaskContainer}>
+      {date.Subtasks.map((item, index) => (
+          <div key={index} className="subtasks-container">
+            <input
+              type="text"
+              className="form-input subtask-input"
+              placeholder="e.g Take coffee break"
+            />
+            <FontAwesomeIcon
+              icon={faTimes}
+            />
+          </div>
+          
+        ))}
+      <button className="add-subtask-button">
         Add New Subtask
       </button>
     </div>

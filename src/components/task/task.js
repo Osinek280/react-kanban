@@ -12,7 +12,7 @@ function Task() {
 
   const taskList = tasks;
 
-  const { section } = useContext(SectionContext);
+  const { section, replaceSection } = useContext(SectionContext);
 
   const [modalArgument, setModalArgument] = useState('');
 
@@ -23,6 +23,31 @@ function Task() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const updateName = (event) => {
+    const { value, defaultValue } = event.target;
+    const updatedSection = section.map((item) => {
+      if (item === defaultValue) {
+        return value;
+      }
+      return item;
+    });
+
+    const updatedTasks = tasks.map((task) => {
+      if (task.category === defaultValue) {
+        return {
+          ...task,
+          category: value,
+        };
+      }
+      return task;
+    });
+    
+    replaceTask(updatedTasks)
+
+
+    replaceSection(updatedSection);
+  };
+  
   useEffect(() => {
     const drake = dragula([], {});
 
@@ -61,8 +86,12 @@ function Task() {
         {section.map((item, index) => (
           <div key={index} id={item} className="task-container">
             <header className="task-container-header">
-              <input spellCheck={false} defaultValue={item} 
-                className='task-container-header-input'></input>
+              <input
+                defaultValue={item}
+                onBlur={updateName}
+                spellCheck={false}
+                className="task-container-header-input"
+              />
             </header>
             <ul id={item}>
               {taskList

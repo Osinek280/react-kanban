@@ -1,5 +1,5 @@
 // AddEditTaskModal.js
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import './taskForm.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -24,10 +24,6 @@ function AddEditTaskModal({ onClose, argument }) {
   if(argument !== 'create'){
     date = taskList[argument]
   }
-
-  // New Substack function
-
-  const [subtaskContainers, setSubtaskContainers] = useState([{}]);
 
   const closeFromClick = (e) => {
     if(e.target.className === 'form-container') {

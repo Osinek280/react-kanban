@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import dragula from 'dragula';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'; 
 import './task.css';
 import AddEditTaskModal from '../taskForm/taskForm';
 import { TasksContext } from '../context';
 import { SectionContext } from '../sectionContext';
+import emptyState from '../../image/undraw_empty_re_opql.svg';
 
 function Task() {
   const { tasks, replaceTask } = useContext(TasksContext);
@@ -41,17 +42,16 @@ function Task() {
       }
       return task;
     });
-    
-    replaceTask(updatedTasks)
 
+    replaceTask(updatedTasks);
 
     replaceSection(updatedSection);
   };
-  
+
   useEffect(() => {
     const drake = dragula([], {});
 
-    drake.on('drop', function (element, target, source, sibling) {
+    drake.on('drop', function (element, target) {
       const newArray = taskList.map((task) => {
         if (task.id === element.id) {
           return { ...task, category: target.id };
@@ -83,32 +83,40 @@ function Task() {
         </button>
       </header>
       <div className="container-for-task">
-        {section.map((item, index) => (
-          <div key={index} id={item} className="task-container">
-            <header className="task-container-header">
-              <input
-                defaultValue={item}
-                onBlur={updateName}
-                spellCheck={false}
-                className="task-container-header-input"
-              />
-            </header>
-            <ul id={item}>
-              {taskList
-                .filter((task) => task.category === item)
-                .map((task, taskIndex) => (
-                  <li
-                    className="task"
-                    key={taskIndex}
-                    id={task.id}
-                    onClick={() => handleToggleModal(task.id)}
-                  >
-                    {task.name}
-                  </li>
-                ))}
-            </ul>
+        {section.length === 0 ? (
+          <div className="empty-state">
+            <span className="empty-state-text">No sections available</span>
+            <img src={emptyState} alt="empty-state-img" />
           </div>
-        ))}
+        ) : (
+          section.map((item, index) => (
+            <div key={index} id={item} className="task-container">
+              <header className="task-container-header">
+                <input
+                  defaultValue={item}
+                  onBlur={updateName}
+                  spellCheck={false}
+                  className="task-container-header-input"
+                />
+              </header>
+              <ul id={item} className="task-list">
+                {taskList
+                  .filter((task) => task.category === item)
+                  .map((task, taskIndex) => (
+                    <li
+                      className="task"
+                      key={taskIndex}
+                      id={task.id}
+                      onClick={() => handleToggleModal(task.id)}
+                    >
+                      <span className="task-primary">{task.priority + ' Primary'}</span>
+                      <span>{task.name}</span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))
+        )}
       </div>
     </main>
   );

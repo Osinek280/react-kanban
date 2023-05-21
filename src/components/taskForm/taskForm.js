@@ -1,63 +1,79 @@
-// AddEditTaskModal.js
-import React, { useContext } from 'react';
-import './taskForm.css'
+import React, { useContext, useState } from 'react';
+import './taskForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TasksContext } from '../context';
 import { SectionContext } from '../sectionContext';
 
 function AddEditTaskModal({ onClose, argument }) {
-  const { section } = useContext(SectionContext)
-  const { tasks, replaceTask } = useContext(TasksContext)
-  
-  const sectionList = section
-  const taskList = tasks
+  const { section } = useContext(SectionContext);
+  const { tasks, replaceTask } = useContext(TasksContext);
+
+  const colors = [
+    '#007bff',
+    '#00cc00',
+    '#005cbf',
+    '#00bfff',
+    '#004080',
+    '#00ced1'
+  ];
+
+  const sectionList = section;
+  const taskList = tasks;
 
   let date = {
     id: '',
     name: '',
     description: '',
     Subtasks: [],
-    category: ''
+    category: '',
+    priority: 'low'
+  };
+
+  if (argument !== 'create') {
+    date = taskList[argument];
   }
 
-  if(argument !== 'create'){
-    date = taskList[argument]
-  }
+  const [priority, setPriority] = useState(date.priority);
 
   const closeFromClick = (e) => {
-    if(e.target.className === 'form-container') {
-      onClose()
+    if (e.target.className === 'form-container') {
+      onClose();
     }
-  }
+  };
+
+  const handlePriorityChange = (e) => {
+    setPriority(e.target.value);
+  };
 
   const addSaveTask = (e) => {
     const NewTask = {
       id: argument !== 'create' ? argument : taskList.length,
       name: document.querySelector('#task-name-input').value,
       description: document.querySelector('#task-description-input').value,
-      Subtasks: Array.from(document.querySelectorAll('.form-input.subtask-input')).map((div) => div.value),
-      category: document.querySelector('.form-select').value
-    };   
-    
+      Subtasks: Array.from(document.querySelectorAll('.form-input.subtask-input')).map((div) =>
+        div.value
+      ),
+      category: document.querySelector('.form-select').value,
+      priority: priority,
+    };
+
     if (argument === 'create') {
-      replaceTask([...taskList, NewTask])
-    }else {
-      const updatedTaskList = taskList
-      updatedTaskList[argument] = NewTask
-      replaceTask(updatedTaskList)
+      replaceTask([...taskList, NewTask]);
+    } else {
+      const updatedTaskList = taskList;
+      updatedTaskList[argument] = NewTask;
+      replaceTask(updatedTaskList);
     }
 
-    onClose()
-  }
+    onClose();
+  };
 
   return (
     <div className="form-container" onClick={closeFromClick}>
       {/* Modal Section */}
       <div className="form">
-        <h3 className="form-heading">
-          {argument === 'create' ? 'Add New' : 'Edit Task'}
-        </h3>
+        <h3 className="form-heading">{argument === 'create' ? 'Add New' : 'Edit Task'}</h3>
 
         {/* Task Name */}
         <div className="form-group">
@@ -84,24 +100,66 @@ function AddEditTaskModal({ onClose, argument }) {
 
         {/* Subtasks */}
         <div className="form-group">
-      <label className="form-label">Subtasks</label>
-      {date.Subtasks.map((item, index) => (
-          <div key={index} className="subtasks-container">
-            <input
-              type="text"
-              className="form-input subtask-input"
-              placeholder="e.g Take coffee break"
-            />
-            <FontAwesomeIcon
-              icon={faTimes}
-            />
+          <label className="form-label">Subtasks</label>
+          {date.Subtasks.map((item, index) => (
+            <div key={index} className="subtasks-container">
+              <input
+                type="text"
+                className="form-input subtask-input"
+                placeholder="e.g Take coffee break"
+                defaultValue={item}
+              />
+              <FontAwesomeIcon icon={faTimes} />
+            </div>
+          ))}
+          <button className="add-subtask-button">Add New Subtask</button>
+        </div>
+
+        {/* Priority */}
+        <div className="form-group">
+          <label className="form-label">Priority</label>
+          <div className="priority-container">
+            <span className="priority">
+              <label className="priority-label" htmlFor="low">
+                Low Priority
+              </label>
+              <input
+                className="priority-input"
+                type="checkbox"
+                id="low"
+                value="low"
+                checked={priority === 'low'}
+                onChange={handlePriorityChange}
+              />
+            </span>
+            <span className="priority">
+              <label className="priority-label" htmlFor="medium">
+                Medium Priority
+              </label>
+              <input
+                className="priority-input"
+                type="checkbox"
+                id="medium"
+                value="medium"
+                checked={priority === 'medium'}
+                onChange={handlePriorityChange}
+              />
+            </span>
+            <span className="priority">
+              <label className="priority-label" htmlFor="high">
+                High Priority
+              </label>
+              <input
+                className="priority-input"
+                type="checkbox"
+                id="high"
+                value="high"
+                checked={priority === 'high'}
+                onChange={handlePriorityChange}
+              />
+            </span>
           </div>
-          
-        ))}
-      <button className="add-subtask-button">
-        Add New Subtask
-      </button>
-    </div>
+        </div>
 
         {/* Current Status */}
         <div className="form-group" id="current-status-group">

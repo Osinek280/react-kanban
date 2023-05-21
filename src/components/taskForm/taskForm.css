@@ -80,3 +80,19 @@
 .form-submit-button {
     margin-top: 20px;
 }
+
+.priority-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.priority{
+    display: flex;
+    width: 38%;
+}
+
+.priority-label{
+    flex-grow: 1;
+}

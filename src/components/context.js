@@ -10,7 +10,7 @@ const TasksProvider = ({ children }) => {
       description: 'Make sure to wash the car thoroughly.',
       Subtasks: ['Take dog for a walk', 'Wash car exterior'],
       category: 'To do',
-      priority: 'low'
+      priority: 'medium'
     },
     {
       id: 1,
@@ -18,7 +18,7 @@ const TasksProvider = ({ children }) => {
       description: 'Take some time to research different car models and features.',
       Subtasks: ['Compare prices', 'Read customer reviews'],
       category: 'To do',
-      priority: 'low'
+      priority: 'height'
     },
     {
       id: 2,
@@ -35,9 +35,10 @@ const TasksProvider = ({ children }) => {
       description: 'Contact insurance provider and arrange car insurance coverage.',
       Subtasks: ['Gather necessary documents', 'Compare insurance plans'],
       category: 'In progress',
-      priority: 'low'
+      priority: 'medium'
     }
   ]);
+  // const [tasks, setTasks] = useState([])
 
   const replaceTask = (TaskArray) => {
     setTasks(TaskArray)

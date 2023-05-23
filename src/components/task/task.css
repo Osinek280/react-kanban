@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -22,47 +31,121 @@
 }
   
 .task-container {
+  position: relative;
   border-radius: 7px;
   flex: 1;
   box-shadow: 2px 2px 24px -4px rgba(66, 68, 90, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list {
+  flex: 1;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px;
+}
+
+.task-container-header{
+  display: flex;
+  padding: 10px 20px 10px 10px;
+  cursor: pointer;
 }
 
 .task-container-header input {
-  padding: 15px 0 0 15px;
   font-size: 20px;
   font-weight: 600;
-}
-  
-ul {
-  list-style-type: none;
-  padding: 0;
-  padding: 0 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: 50%;
+  outline: none;
 }
   
 .task {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 2px 2px 24px -4px rgba(66, 68, 90, 0.6);
-  padding: 15px;
-  border-radius: 10px;
-  background: white;
-}  
+  justify-content: center;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  gap: 5px;
+}
 
-.task-primary {
+.task:hover {
+  background-color: #eaeaea;
+}
+
+.task .task-primary {
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.task-name {
+  font-size: 22px;
+}
+
+.task-container-header {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.task-container-header-input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 10px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  outline: none;
+}
+
+.new-task-btn {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-task-btn:hover {
+  background-color: #0069d9;
+}
+
+.empty-state {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  background: #F7709E;
-  padding: 2px 5px;
-  border-radius: 5px;
-  color: whitesmoke;
-  font-size: 12px;
-  letter-spacing: 1px;
+  padding: 32px;
+  text-align: center;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.empty-state-text {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.main-container {
+  padding: 24px;
 }
 
  
@@ -123,12 +206,36 @@ ul {
   letter-spacing: 1px;
 }
 
+.context-menu {
+  z-index: 1 !important;
+  position: absolute;
+  right: 0;
+  transform: translate(-5%, -90%);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: black;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 2px 2px 24px -4px rgba(66, 68, 90, 0.6);
+}
+
+.context-menu .item {
+  padding: 0 5px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.item:hover {
+  background: #f2f2f2;
+}
+
   /* Dragula CSS Release 3.2.0 from: https://github.com/bevacqua/dragula */
   
 .gu-mirror{
   position: fixed !important;
   margin: 0 !important;
-  z-index: 9999 !important;
+  z-index: 2 !important;
 }
     
 .gu-hide {
@@ -143,24 +250,13 @@ ul {
 }
 
 .gu-transit {
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 20px,
-    black 20px,
-    black 40px
-  );
-  /* with multiple color stop lengths */
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0 20px,
-    black 20px 40px
-  );
+  --bar-height: 5px;
+  --bar-spacing: var(--bar-height);
+
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, #EAEBF0 5px, #EAEBF0 10px);
+
 }
 
 .gu-transit * {
-  display: none;
+  opacity: 0;
 }

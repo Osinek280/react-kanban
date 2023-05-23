@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import dragula from 'dragula';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'; 
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import './task.css';
 import AddEditTaskModal from '../taskForm/taskForm';
 import { TasksContext } from '../context';
 import { SectionContext } from '../sectionContext';
 import emptyState from '../../image/undraw_empty_re_opql.svg';
+import Navbar from '../navabr/navbar';
+// import TaskModal from '../taskModal/taskModal';
 
 function Task() {
   const { tasks, replaceTask } = useContext(TasksContext);
@@ -17,12 +19,21 @@ function Task() {
 
   const [modalArgument, setModalArgument] = useState('');
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contextIndex, setContextIndex] = useState(-1);
+
   const handleToggleModal = (argument) => {
     setModalArgument(argument);
     setIsModalOpen(!isModalOpen);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleToggleContext = (index) => {
+    if (contextIndex === index) {
+      setContextIndex(-1);
+    } else {
+      setContextIndex(index);
+    }
+  };
 
   const updateName = (event) => {
     const { value, defaultValue } = event.target;
@@ -75,13 +86,7 @@ function Task() {
   return (
     <main className="main-container">
       {isModalOpen && <AddEditTaskModal onClose={handleToggleModal} argument={modalArgument} />}
-      <header className="main-header">
-        <span className="text">Projects</span>
-        <button className="new-task-btn" onClick={() => handleToggleModal('create')}>
-          <FontAwesomeIcon icon={faPlus} />
-          Add New Task
-        </button>
-      </header>
+      <Navbar onClose={() => handleToggleModal('create')}/>
       <div className="container-for-task">
         {section.length === 0 ? (
           <div className="empty-state">
@@ -98,6 +103,11 @@ function Task() {
                   spellCheck={false}
                   className="task-container-header-input"
                 />
+                <span className='context-btn' onClick={() => handleToggleContext(index)}>
+                <FontAwesomeIcon
+                  icon={faEllipsisVertical}
+                />
+                </span>
               </header>
               <ul id={item} className="task-list">
                 {taskList
@@ -109,11 +119,29 @@ function Task() {
                       id={task.id}
                       onClick={() => handleToggleModal(task.id)}
                     >
-                      <span className="task-primary">{task.priority + ' Primary'}</span>
-                      <span>{task.name}</span>
+                      <span
+                        className="task-primary"
+                        style={{
+                          color:
+                            task.priority === 'low'
+                              ? '#00aa00'
+                              : task.priority === 'medium'
+                              ? '#007bff'
+                              : '#ff0000',
+                        }}
+                      >
+                        {task.priority + ' Primary'}
+                      </span>
+                      <span className="task-name">{task.name}</span>
                     </li>
                   ))}
               </ul>
+              {contextIndex === index && (
+                <span className="context-menu">
+                  <span className="item">Add New Task</span>
+                  <span className="item">Delete</span>
+                </span>
+              )}
             </div>
           ))
         )}

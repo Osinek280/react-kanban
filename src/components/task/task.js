@@ -8,7 +8,8 @@ import { TasksContext } from '../context';
 import { SectionContext } from '../sectionContext';
 import emptyState from '../../image/undraw_empty_re_opql.svg';
 import Navbar from '../navabr/navbar';
-// import TaskModal from '../taskModal/taskModal';
+import SectionModal from '../../SectionModal/SectionModal';
+
 
 function Task() {
   const { tasks, replaceTask } = useContext(TasksContext);
@@ -20,11 +21,17 @@ function Task() {
   const [modalArgument, setModalArgument] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSectionModalOpen, SetIsSectionModalOpen] = useState(false)
+
   const [contextIndex, setContextIndex] = useState(-1);
 
   const handleToggleModal = (argument) => {
     setModalArgument(argument);
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleToggleSectionModal = () => {
+    SetIsSectionModalOpen(!isSectionModalOpen)
   };
 
   const handleToggleContext = (index) => {
@@ -86,7 +93,8 @@ function Task() {
   return (
     <main className="main-container">
       {isModalOpen && <AddEditTaskModal onClose={handleToggleModal} argument={modalArgument} />}
-      <Navbar onClose={() => handleToggleModal('create')}/>
+      {isSectionModalOpen && <SectionModal onOpen={handleToggleSectionModal} />}
+      <Navbar onClose={() => handleToggleModal('create')} from="task"/>
       <div className="container-for-task">
         {section.length === 0 ? (
           <div className="empty-state">

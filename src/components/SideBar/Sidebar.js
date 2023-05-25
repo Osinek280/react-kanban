@@ -3,8 +3,10 @@ import './Sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faSearch, faBook, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Sidebar = ({ onClose }) => {
+const Sidebar = ({ onClose, files }) => {
   const [resize, setResize] = useState(false);
+
+  console.log(files)
 
   return (
     <nav className="navbar">

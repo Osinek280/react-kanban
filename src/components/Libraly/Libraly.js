@@ -1,31 +1,50 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './Libraly.css';
 import Navbar from "../navabr/navbar";
-import folderIcon from "../../image/files-and-folders.png"
+import fileIcon from "../../image/file-icon.svg";
+import dragula from 'dragula';
+import emptyState from '../../image/undraw_empty_re_opql.svg';
 
-function Libraly() {
-  
-  const files = [
-    {name: 'Sudoku'},{name: 'Polish'},{name: 'school presentation'},
-    {name: 'Sudoku'},{name: 'Polish'},{name: 'school presentation'},
-    {name: 'Sudoku'},{name: 'Polish'},{name: 'school presentation'},
-    {name: 'Sudoku'},{name: 'Polish'},{name: 'school presentation'},
-    {name: 'Sudoku'},{name: 'Polish'},{name: 'school presentation'}
-  ]
+function Libraly({ files, replaceDate, focus }) {
+
+  const libralyContainerRef = useRef(null);
+  const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    const drake = dragula([libralyContainerRef.current]);
+    return () => {
+      drake.destroy();
+    };
+  }, []);
+
+  const onInput = (value) => {
+    setSearchValue(value);
+  };
+
+  const filteredFiles = files.filter((file) =>
+    file.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   return (
     <div className="main-container">
-      <Navbar />
-      <div className="libraly-container">
-        {files.map((task, taskIndex) => (
-          <div key={taskIndex} className="file">
-            <span className="img-box">
-              <img src={folderIcon} alt=""></img>
-            </span>
-            <span>{task.name}</span>
-          </div>
-        ))}
-      </div>
+      <Navbar onClose={onInput} from='Library' focus={focus} />
+      {filteredFiles.length === 0 ? (
+        <div className="empty-state">
+          <span className="empty-state-text">No Files available</span>
+          <img src={emptyState} alt="empty-state-img" />
+        </div>
+      ) : (
+        <div className="libraly-container" ref={libralyContainerRef}>
+          {filteredFiles.map((file, fileIndex) => (
+            <div key={fileIndex} className="file">
+              <span className="img-box" onClick={() => replaceDate(file)}>
+                <img src={fileIcon} alt="" />
+              </span>
+              <span>{file.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

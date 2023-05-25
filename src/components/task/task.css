@@ -19,10 +19,6 @@
   box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.3);
 }
   
-.main-header {
-  font-size: 24px;
-}
-  
 .container-for-task {
   width: 100%;
   height: 100%;
@@ -108,23 +104,6 @@
   outline: none;
 }
 
-.new-task-btn {
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.new-task-btn:hover {
-  background-color: #0069d9;
-}
-
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -151,24 +130,6 @@
  
 .main-header {
   display: flex;
-}
-
-.text {
-  flex-grow: 1;
-}
-
-.new-task-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 25px;
-  padding: 10px;
-  border-radius: 15px;
-  background: #444444;
-  color: white;
-  font-weight: 800;
-  letter-spacing: 1px;
-  cursor: pointer;
 }
 
 .task-container-header-input{

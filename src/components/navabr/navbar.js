@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './navbar.css';
 
-function Navbar({ onClose, focus, from }) {
+function Navbar({ onClose, onOpen, focus, from, name }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Navbar({ onClose, focus, from }) {
 
   return (
     <header className="main-header">
-      <span className="text">Projects</span>
+      <span className="text">{name}</span>
       {from !== 'task' && (
         <span className="search">
           <input
@@ -29,7 +29,7 @@ function Navbar({ onClose, focus, from }) {
         <FontAwesomeIcon icon={faPlus} />
         Add New Task
       </button>
-      <button className="new-task-btn">
+      <button className="new-task-btn" onClick={onOpen}>
         <FontAwesomeIcon icon={faPlus} />
         Add New Section
       </button>

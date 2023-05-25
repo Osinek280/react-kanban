@@ -52,9 +52,14 @@ function AddEditTaskModal({ onClose, argument }) {
     if (argument === 'create') {
       replaceTasks([...taskList, NewTask]);
     } else {
-      const updatedTaskList = taskList;
-      updatedTaskList[argument] = NewTask;
-      replaceTasks(updatedTaskList);
+      const updatedTaskList = taskList.map(task => {
+        if (task === argument) {
+          return NewTask;
+        }
+        return task;
+      });
+    
+      replaceTasks(updatedTaskList)      
     }
 
     onClose();
@@ -65,7 +70,6 @@ function AddEditTaskModal({ onClose, argument }) {
       {/* Modal Section */}
       <div className="form">
         <h3 className="form-heading">{argument === 'create' ? 'Add New' : 'Edit Task'}</h3>
-
         {/* Task Name */}
         <div className="form-group">
           <label className="form-label">Task Name</label>

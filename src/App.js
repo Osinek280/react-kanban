@@ -68,7 +68,7 @@ function App() {
       name: 'Work',
       type: 'file',
       files: null,
-      section: ['To do', 'In progress', 'Done'],
+      section: ['To do', 'In progress', 'Done', 'home'],
       task: [
         {
           name: 'Prepare monthly report',

@@ -43,14 +43,14 @@ const KanbanProvider = ({ children }) => {
   });
 
   const replaceTasks = (taskArray) => {
-    const newTasks = Kanban
-    newTasks.task = taskArray
-    setKanban(newTasks)
-    console.log(Kanban)
+    setKanban(prevKanban => ({
+      ...prevKanban,
+      task: taskArray
+    }));
   };
+  
 
   const replaceSections = (sectionArray) => {
-    console.log(true)
     setKanban((prevKanban) => ({
       ...prevKanban,
       section: sectionArray,

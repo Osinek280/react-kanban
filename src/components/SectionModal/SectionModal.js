@@ -1,6 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
+import { KanbanContext } from "../KanbanContext";
 
-function SectionModal () {
+function SectionModal ( {onClose} ) {
+
+    const { Kanban, replaceTasks, replaceSections } = useContext(KanbanContext)
+
+    const addNewSection = () => {
+        replaceSections([...Kanban.section, document.querySelector('#section-name-input').value])
+        onClose()
+    };  
+
     return(
         <div className="form-container">
             <div className="form">
@@ -13,7 +22,9 @@ function SectionModal () {
                         placeholder="e.g Take coffee break"
                     />
                     
-                <button className="form-submit-button">Add new Section</button>
+                <button className="form-submit-button" onClick={addNewSection}
+                    >Add new Section
+                </button>
                 </div>
             </div>
         </div> 

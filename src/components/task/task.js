@@ -6,7 +6,7 @@ import './task.css';
 import AddEditTaskModal from '../taskForm/taskForm';
 import emptyState from '../../image/undraw_empty_re_opql.svg';
 import Navbar from '../navabr/navbar';
-import SectionModal from '../../SectionModal/SectionModal';
+import SectionModal from '../SectionModal/SectionModal';
 import { KanbanContext } from '../KanbanContext';
 
 function Task() {
@@ -30,6 +30,7 @@ function Task() {
 
   const handleToggleSectionModal = () => {
     SetIsSectionModalOpen(!isSectionModalOpen)
+    console.log('work')
   };
 
   const handleToggleContext = (index) => {
@@ -91,8 +92,8 @@ function Task() {
   return (
     <main className="main-container">
       {isModalOpen && <AddEditTaskModal onClose={handleToggleModal} argument={modalArgument} />}
-      {isSectionModalOpen && <SectionModal onOpen={handleToggleSectionModal} />}
-      <Navbar onClose={() => handleToggleModal('create')} from="task"/>
+      {isSectionModalOpen && <SectionModal onClose={handleToggleSectionModal} />}
+      <Navbar onClose={() => handleToggleModal('create')} from="task" name={Kanban.name} onOpen={handleToggleSectionModal}/>
       <div className="container-for-task">
         {section.length === 0 ? (
           <div className="empty-state">

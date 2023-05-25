@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SectionProvider } from './components/sectionContext';
-import { TasksProvider } from './components/context';
+import { TasksProvider } from './components/Taskcontext';
+import { KanbanProvider } from './components/KanbanContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <SectionProvider>
       <TasksProvider>
-        <App />
+        <KanbanProvider>
+          <App />
+        </KanbanProvider>
       </TasksProvider>
     </SectionProvider>
   </React.StrictMode>

@@ -2,24 +2,15 @@ import React, { useContext, useState } from 'react';
 import './taskForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { TasksContext } from '../context';
-import { SectionContext } from '../sectionContext';
+import { KanbanContext } from '../KanbanContext';
+
 
 function AddEditTaskModal({ onClose, argument }) {
-  const { section } = useContext(SectionContext);
-  const { tasks, replaceTask } = useContext(TasksContext);
 
-  const colors = [
-    '#007bff',
-    '#00cc00',
-    '#005cbf',
-    '#00bfff',
-    '#004080',
-    '#00ced1'
-  ];
+  const { Kanban, replaceTasks} = useContext(KanbanContext)
 
-  const sectionList = section;
-  const taskList = tasks;
+  const sectionList = Kanban.section;
+  const taskList = Kanban.task;
 
   let date = {
     id: '',
@@ -31,7 +22,7 @@ function AddEditTaskModal({ onClose, argument }) {
   };
 
   if (argument !== 'create') {
-    date = taskList[argument];
+    date = argument;
   }
 
   const [priority, setPriority] = useState(date.priority);
@@ -59,11 +50,11 @@ function AddEditTaskModal({ onClose, argument }) {
     };
 
     if (argument === 'create') {
-      replaceTask([...taskList, NewTask]);
+      replaceTasks([...taskList, NewTask]);
     } else {
       const updatedTaskList = taskList;
       updatedTaskList[argument] = NewTask;
-      replaceTask(updatedTaskList);
+      replaceTasks(updatedTaskList);
     }
 
     onClose();

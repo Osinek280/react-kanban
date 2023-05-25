@@ -1,26 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import Sidebar from './components/SideBar/Sidebar.js';
 import Task from './components/task/task';
 import Libraly from './components/Libraly/Libraly';
-import { SectionContext } from './components/sectionContext';
-import { TasksContext } from './components/context';
+import { KanbanContext } from './components/KanbanContext';
 
 function App() {
   const [activeWindow, setActiveWindow] = useState('TASK');
 
-  const { tasks, replaceTask } = useContext(TasksContext);
-  const { section, replaceSection } = useContext(SectionContext);
+  const { replaceSections, replaceTasks } = useContext(KanbanContext)
 
   const replaceDate = (element) => {
     if(element.type === 'file') {
-      replaceSection(element.section)
-      replaceTask(element.task)
+      replaceSections(element.section)
+      replaceTasks(element.task)
       setActiveWindow('TASK')
     }
   }
 
-  const [files, setFiles] = useState([
+  const [files] = useState([
     {
       name: 'School',
       type: 'file',
@@ -115,14 +113,8 @@ function App() {
   
 
   const toggleWindow = (window) => {
-    console.log(window);
     setActiveWindow(window);
   };
-
-  useEffect(() => {
-    replaceSection([]);
-    replaceTask([])
-  }, []);
 
   return (
     <div className="App">

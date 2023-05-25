@@ -4,19 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import './task.css';
 import AddEditTaskModal from '../taskForm/taskForm';
-import { TasksContext } from '../context';
-import { SectionContext } from '../sectionContext';
 import emptyState from '../../image/undraw_empty_re_opql.svg';
 import Navbar from '../navabr/navbar';
 import SectionModal from '../../SectionModal/SectionModal';
-
+import { KanbanContext } from '../KanbanContext';
 
 function Task() {
-  const { tasks, replaceTask } = useContext(TasksContext);
+  const { Kanban, replaceTasks, replaceSections } = useContext(KanbanContext)
 
-  const taskList = tasks;
+  const taskList = Kanban.task;
+  const section = Kanban.section
 
-  const { section, replaceSection } = useContext(SectionContext);
 
   const [modalArgument, setModalArgument] = useState('');
 
@@ -51,7 +49,7 @@ function Task() {
       return item;
     });
 
-    const updatedTasks = tasks.map((task) => {
+    const updatedTasks = taskList.map((task) => {
       if (task.category === defaultValue) {
         return {
           ...task,
@@ -61,9 +59,9 @@ function Task() {
       return task;
     });
 
-    replaceTask(updatedTasks);
+    replaceTasks(updatedTasks);
 
-    replaceSection(updatedSection);
+    replaceSections(updatedSection);
   };
 
   useEffect(() => {
@@ -77,7 +75,7 @@ function Task() {
         return task;
       });
 
-      replaceTask(newArray);
+      replaceTasks(newArray);
     });
 
     const containers = Array.from(document.querySelectorAll('.task-container ul'));
@@ -88,7 +86,7 @@ function Task() {
     return () => {
       drake.destroy();
     };
-  }, [replaceTask, taskList]);
+  }, [replaceTasks, taskList]);
 
   return (
     <main className="main-container">
@@ -125,7 +123,7 @@ function Task() {
                       className="task"
                       key={taskIndex}
                       id={task.id}
-                      onClick={() => handleToggleModal(task.id)}
+                      onClick={() => handleToggleModal(task)}
                     >
                       <span
                         className="task-primary"

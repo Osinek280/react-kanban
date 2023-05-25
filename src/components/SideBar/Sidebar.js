@@ -6,8 +6,6 @@ import { faHome, faSearch, faBook, faArrowRight, faArrowLeft } from '@fortawesom
 const Sidebar = ({ onClose, files }) => {
   const [resize, setResize] = useState(false);
 
-  console.log(files)
-
   return (
     <nav className="navbar">
       <span className='icon' onClick={() => {onClose('HOME')}}>

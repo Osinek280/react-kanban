@@ -69,13 +69,13 @@ function Task() {
     const drake = dragula([], {});
 
     drake.on('drop', function (element, target) {
+      // Doesn't work
       const newArray = taskList.map((task) => {
         if (task.id === element.id) {
           return { ...task, category: target.id };
         }
         return task;
       });
-
       replaceTasks(newArray);
     });
 

@@ -14,7 +14,7 @@ function Navbar({ onClose, onOpen, focus, from, name }) {
 
   return (
     <header className="main-header">
-      <span className="text">{name}</span>
+      <span className="text">{from !== 'task' ? 'Files' : name}</span>
       {from !== 'task' && (
         <span className="search">
           <input

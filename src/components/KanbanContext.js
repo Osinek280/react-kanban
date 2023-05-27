@@ -54,7 +54,6 @@ const KanbanProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error(error);
-        // Jeśli wystąpił błąd, możesz wyświetlić komunikat lub podjąć inne działania
       });
   };
 
@@ -80,16 +79,47 @@ const KanbanProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error(error);
-        // Jeśli wystąpił błąd, możesz wyświetlić komunikat lub podjąć inne działania
       });
   };
+
+  const replaceTasksAndSections = (taskArray, sectionArray) => {
+    setKanban((prevKanban) => ({
+      ...prevKanban,
+      section: sectionArray,
+      task: taskArray,
+    }));
+    console.log(JSON.stringify({
+      ...Kanban,
+      section: sectionArray,
+      task: taskArray,
+    }))
+    fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        ...Kanban,
+        section: sectionArray,
+        task: taskArray,
+      }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to update sections on the server');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   const replaceKanban = (KanbanArray) => {
     setKanban(KanbanArray);
   };
 
   return (
-    <KanbanContext.Provider value={{ Kanban, replaceTasks, replaceSections, replaceKanban }}>
+    <KanbanContext.Provider value={{ Kanban, replaceTasks, replaceSections, replaceKanban, replaceTasksAndSections }}>
       {children}
     </KanbanContext.Provider>
   );

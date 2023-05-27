@@ -10,7 +10,7 @@ import SectionModal from '../SectionModal/SectionModal';
 import { KanbanContext } from '../KanbanContext';
 
 function Task() {
-  const { Kanban, replaceTasks, replaceSections } = useContext(KanbanContext)
+  const { Kanban, replaceTasks, replaceTasksAndSections } = useContext(KanbanContext)
 
   const taskList = Kanban.task;
   const section = Kanban.section
@@ -59,10 +59,7 @@ function Task() {
       }
       return task;
     });
-
-    replaceTasks(updatedTasks);
-
-    replaceSections(updatedSection);
+    replaceTasksAndSections(updatedTasks, updatedSection);
   };
 
   useEffect(() => {
@@ -106,6 +103,7 @@ function Task() {
               <header className="task-container-header">
                 <input
                   defaultValue={item}
+                  onClick={() => {console.log(item)}}
                   onBlur={updateName}
                   spellCheck={false}
                   className="task-container-header-input"

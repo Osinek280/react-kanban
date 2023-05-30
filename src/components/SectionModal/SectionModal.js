@@ -1,24 +1,40 @@
 import React, { useState, useContext } from "react";
 import { KanbanContext } from "../KanbanContext";
 
-function SectionModal({ onClose }) {
+function SectionModal({ onClose, fromTask, updateFiles }) {
+
   const { Kanban, replaceSections } = useContext(KanbanContext);
-  const [isInputEmpty, setIsInputEmpty] = useState(false);
 
   const addNewSection = () => {
     const sectionNameInput = document.querySelector("#section-name-input");
     const sectionName = sectionNameInput.value.trim();
-    if (sectionName) {
-      replaceSections([...Kanban.section, sectionName]);
-      onClose();
-    } else {
-      setIsInputEmpty(true);
-    }
+    
+    replaceSections([...Kanban.section, sectionName]);
+    onClose()
   };
 
-  const handleInputChange = () => {
-    setIsInputEmpty(false);
-  };
+  const addNewKanban = () => {
+    const sectionNameInput = document.querySelector("#section-name-input");
+    const sectionName = sectionNameInput.value.trim();
+    console.log(sectionName);
+    fetch('http://127.0.0.1:3333/files', {
+      method: 'POST',
+      body: JSON.stringify([sectionName]),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to update tasks on the server');
+      }
+      updateFiles();
+      onClose();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }  
 
   return (
     <div className="form-container">
@@ -30,20 +46,14 @@ function SectionModal({ onClose }) {
           <input
             id="section-name-input"
             type="text"
-            className={`form-input ${isInputEmpty ? "form-input-error" : ""}`}
+            className={'form-input'}
             placeholder="e.g Take coffee break"
-            onChange={handleInputChange}
           />
-          {isInputEmpty && (
-            <span className="form-input-error-message">
-              Field cannot be empty
-            </span>
-          )}
 
           <button
             className="form-submit-button"
             type="submit"
-            onClick={addNewSection}
+            onClick={fromTask === true ? addNewSection : addNewKanban}
           >
             Add new Section
           </button>

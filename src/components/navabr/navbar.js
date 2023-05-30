@@ -14,25 +14,35 @@ function Navbar({ onClose, onOpen, focus, from, name }) {
 
   return (
     <header className="main-header">
-      <span className="text">{from !== 'task' ? 'Files' : name}</span>
-      {from !== 'task' && (
-        <span className="search">
-          <input
-            ref={inputRef}
-            onInput={(e) => onClose(e.target.value)} 
-            className="search-input" 
-            placeholder="Search"
-          />
-        </span>
+      <span className="text">{name === undefined ? 'Files' : name}</span>
+      {from === 'Library' && (
+        <>
+          <span className="search">
+            <input
+              ref={inputRef}
+              onInput={(e) => onClose(e.target.value)} 
+              className="search-input" 
+              placeholder="Search"
+            />
+          </span>
+          <button className="new-kanban-btn" onClick={onOpen}>
+            <FontAwesomeIcon icon={faPlus} />
+            Add New Kanban
+          </button>
+        </>
       )}
-      <button className="new-task-btn" onClick={onClose}>
-        <FontAwesomeIcon icon={faPlus} />
-        Add New Task
-      </button>
-      <button className="new-task-btn" onClick={onOpen}>
-        <FontAwesomeIcon icon={faPlus} />
-        Add New Section
-      </button>
+      {from === 'task' && (
+        <>
+          <button className="new-task-btn" onClick={() => onClose(false)}>
+            <FontAwesomeIcon icon={faPlus} />
+            Add New Task
+          </button>
+          <button className="new-section-btn" onClick={onOpen}>
+            <FontAwesomeIcon icon={faPlus} />
+            Add New Section
+          </button>
+        </>
+      )}
     </header>
   );
 }

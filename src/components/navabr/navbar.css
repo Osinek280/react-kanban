@@ -1,8 +1,8 @@
 .main-header {
     font-size: 24px;
-  }
+}
 
-.new-task-btn {
+.new-task-btn, .new-section-btn, .new-kanban-btn {
     display: flex;
     align-items: center;
     padding: 8px 16px;
@@ -13,15 +13,6 @@
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-  
-.new-task-btn:hover {
-    background-color: #0069d9;
-}
-
-.new-task-btn {
-    display: flex;
-    align-items: center;
     gap: 8px;
     margin-right: 25px;
     padding: 10px;
@@ -30,7 +21,10 @@
     color: white;
     font-weight: 800;
     letter-spacing: 1px;
-    cursor: pointer;
+}  
+  
+.new-task-btn:hover, .new-section-btn:hover, .new-kanban-btn:hover{
+    background-color: #0069d9;
 }
 
 .text {

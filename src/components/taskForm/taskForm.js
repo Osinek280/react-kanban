@@ -5,7 +5,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { KanbanContext } from '../KanbanContext';
 
 
-function AddEditTaskModal({ onClose, argument }) {
+function AddEditTaskModal({ onClose, argument, category }) {
+
+  console.log(category)
 
   const { Kanban, replaceTasks} = useContext(KanbanContext)
 
@@ -24,6 +26,8 @@ function AddEditTaskModal({ onClose, argument }) {
   if (argument !== 'create') {
     date = argument;
   }
+
+  if(category !== undefined) date.category = category;
 
   const [priority, setPriority] = useState(date.priority);
 

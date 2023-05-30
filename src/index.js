@@ -3,20 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { SectionProvider } from './components/sectionContext';
-import { TasksProvider } from './components/Taskcontext';
 import { KanbanProvider } from './components/KanbanContext';
+import { ApiProvider } from './components/RestClient';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SectionProvider>
-      <TasksProvider>
-        <KanbanProvider>
-          <App />
-        </KanbanProvider>
-      </TasksProvider>
-    </SectionProvider>
+    <KanbanProvider>
+      <ApiProvider>
+        <App />
+      </ApiProvider>
+    </KanbanProvider>
   </React.StrictMode>
 );
 

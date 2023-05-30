@@ -69,6 +69,22 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   gap: 5px;
+  position: relative;
+}
+
+.remove-task-btn{
+  padding: 5px 0;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 5px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.task:hover .remove-task-btn {
+  opacity: 1;
 }
 
 .task:hover {
@@ -109,24 +125,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px;
   text-align: center;
   background-color: #f7f7f7;
   border: 1px solid #ddd;
   border-radius: 4px;
+  height: 100%;
 }
 
 .empty-state-text {
-  margin-bottom: 16px;
   font-size: 18px;
   font-weight: bold;
   color: #555;
 }
-
-.main-container {
-  padding: 24px;
-}
-
  
 .main-header {
   display: flex;
@@ -144,7 +154,6 @@
   align-items: center;
   text-align: center;
   width: 100%;
-  padding: 80px;
 }
   
 .empty-state img {

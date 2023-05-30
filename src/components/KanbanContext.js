@@ -88,11 +88,6 @@ const KanbanProvider = ({ children }) => {
       section: sectionArray,
       task: taskArray,
     }));
-    console.log(JSON.stringify({
-      ...Kanban,
-      section: sectionArray,
-      task: taskArray,
-    }))
     fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
       method: 'PATCH',
       body: JSON.stringify({

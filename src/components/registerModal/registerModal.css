@@ -1,0 +1,12 @@
+.deputy{
+    position: absolute;
+    right: 0;
+    top: 40%;
+    transform: translate(-60%, -50%);
+    cursor: pointer;
+    color: #a8a8a8;
+}
+
+.user-box{
+    position: relative;
+}

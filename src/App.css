@@ -13,8 +13,10 @@
   height: 85vh;
   width: 100%;
   background: #1D1D1D;
-  gap: 20px;
-  padding: 25px;
+  padding: 25px 25px 25px 0;
   border-radius: 15px;
 }
 
+.App *  {
+  /* border: 1px solid pink; */
+}

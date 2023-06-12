@@ -17,7 +17,7 @@ function SectionModal({ onClose, fromTask, updateFiles }) {
     const sectionNameInput = document.querySelector("#section-name-input");
     const sectionName = sectionNameInput.value.trim();
     console.log(sectionName);
-    fetch('http://127.0.0.1:3333/files', {
+    fetch('http://127.0.0.1:8888/files', {
       method: 'POST',
       body: JSON.stringify([sectionName]),
       headers: {

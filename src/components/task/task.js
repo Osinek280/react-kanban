@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
 import './task.css';
 import AddEditTaskModal from '../taskForm/taskForm';
-import emptyState from '../../image/undraw_empty_re_opql.svg';
+import EmptyState from '../emptyState/emptyState';
 import Navbar from '../navabr/navbar';
 import SectionModal from '../SectionModal/SectionModal';
 import { KanbanContext } from '../KanbanContext';
 
 function Task() {
-  const { Kanban, replaceTasks, replaceSections, replaceTasksAndSections } = useContext(KanbanContext);
+  const { Kanban, replaceTasks, replaceTasksAndSections } = useContext(KanbanContext);
 
   const taskList = Kanban.task;
   const section = Kanban.section;
@@ -80,6 +80,7 @@ function Task() {
     const drake = dragula([], {});
 
     drake.on('drop', function (element, target, source) {
+    const token = localStorage.getItem('token');
       const newArray = taskList.map((task) => {
         if (task.id === parseInt(element.id)) {
           return {
@@ -89,19 +90,19 @@ function Task() {
         }
         return task;
       });
-      fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
+      fetch(`http://127.0.0.1:8888/files/${Kanban.id}`, {
         method: 'PATCH',
         body: JSON.stringify({
           ...Kanban,
-          task: newArray,
+          task: newArray
         }),
         headers: {
-          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to update tasks on the server');
+            throw new Error('Failed to update sections on the server');
           }
         })
         .catch((error) => {
@@ -128,10 +129,7 @@ function Task() {
       <Navbar onClose={() => handleToggleModal('create')} from="task" name={Kanban.name} onOpen={handleToggleSectionModal} />
       <div className="container-for-task">
         {section.length === 0 ? (
-          <div className="empty-state">
-            <span className="empty-state-text">No sections available</span>
-            <img src={emptyState} alt="empty-state-img" />
-          </div>
+          <EmptyState value={'No sections available'}/>
         ) : (
           section.map((item, index) => (
             <div key={index} id={item} className="task-container">

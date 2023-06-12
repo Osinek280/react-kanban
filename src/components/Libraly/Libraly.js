@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import './Libraly.css';
+import "./Libraly.css";
 import Navbar from "../navabr/navbar";
 import fileIcon from "../../image/file-icon.svg";
-import dragula from 'dragula';
-import emptyState from '../../image/undraw_empty_re_opql.svg';
+import dragula from "dragula";
+import EmptyState from "../emptyState/emptyState";
 import SectionModal from "../SectionModal/SectionModal";
 
-function Libraly({ files, replaceDate, focus, updateFiles }) {
-
-  const libralyContainerRef = useRef(null);
-  const [searchValue, setSearchValue] = useState('');
-
-  const [ isModalOpen, SetIsModalOpen] = useState(false)
+function Library({ files, replaceDate, focus, updateFiles }) {
+  const libraryContainerRef = useRef(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contextIndex, setContextIndex] = useState(-1);
 
   useEffect(() => {
-    const drake = dragula([libralyContainerRef.current]);
+    const drake = dragula([libraryContainerRef.current]);
     return () => {
       drake.destroy();
     };
@@ -24,28 +23,61 @@ function Libraly({ files, replaceDate, focus, updateFiles }) {
     setSearchValue(value);
   };
 
-  const filteredFiles = files.filter((file) =>
-    file.name.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredFiles = files.filter(
+    (file) =>
+      file.name &&
+      file.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
     <div className="main-container">
-      {isModalOpen && <SectionModal fromTask={false} 
-        onClose={() => {SetIsModalOpen(!isModalOpen)}} updateFiles={updateFiles}/>}
-      <Navbar onClose={onInput} from='Library' focus={focus} onOpen={() => {SetIsModalOpen(!isModalOpen)}} />
+      {isModalOpen && (
+        <SectionModal
+          fromTask={false}
+          onClose={() => setIsModalOpen(!isModalOpen)}
+          updateFiles={updateFiles}
+        />
+      )}
+      <Navbar
+        onClose={onInput}
+        from="Library"
+        focus={focus}
+        onOpen={() => setIsModalOpen(!isModalOpen)}
+      />
       {filteredFiles.length === 0 ? (
-        <div className="empty-state">
-          <span className="empty-state-text">No Files available</span>
-          <img src={emptyState} alt="empty-state-img" />
-        </div>
+        <EmptyState value={'No files available'}/>
       ) : (
-        <div className="libraly-container" ref={libralyContainerRef}>
+        <div className="library-container" ref={libraryContainerRef}>
           {filteredFiles.map((file, fileIndex) => (
-            <div key={fileIndex} className="file">
-              <span className="img-box" onClick={() => {replaceDate(file)}}>
-                <img src={fileIcon} alt="" />
-              </span>
-              <span>{file.name}</span>
+            <div key={fileIndex} className="file-con">
+              <div
+                className="file"
+                onMouseDown={(e) => {
+                  if (e.button === 0) {
+                    replaceDate(file);
+                  } else if (e.button === 2) {
+                    if (contextIndex === fileIndex) {
+                      setContextIndex(-1);
+                    } else {
+                      setContextIndex(fileIndex);
+                    }
+                  }
+                }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                <span className="img-box">
+                  <img src={fileIcon} alt="" />
+                </span>
+                <span>{file.name}</span>
+              </div>
+              {contextIndex === fileIndex && (
+                <span className="context-menu">
+                  <span className="item">Add New Task</span>
+                  <span className="item">Delete</span>
+                </span>
+              )}
             </div>
           ))}
         </div>
@@ -54,4 +86,4 @@ function Libraly({ files, replaceDate, focus, updateFiles }) {
   );
 }
 
-export default Libraly;
+export default Library;

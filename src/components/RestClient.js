@@ -8,20 +8,29 @@ const ApiProvider = ({ children }) => {
   const [files, setFiles] = useState([]);
 
   function getItemFromBackEnd(userId) {
-    console.log('GET');
-    return fetch(`http://127.0.0.1:3333/files?userId=${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        replaceKanban(data.kanban[0][data.kanban[1]]);
-        setFiles(data.kanban[0]);
+    const token = localStorage.getItem('token');
+  
+    fetch('http://127.0.0.1:8888/files', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Błąd pobierania plików');
+        }
       })
-      .catch((error) => {
-        console.error(error);
+      .then(data => {
+        console.log(data)
+        setFiles(data.files)
+      })
+      .catch(error => {
+        console.error('Błąd pobierania plików:', error);
       });
   }
-  
-  
 
   return (
     <ApiContext.Provider value={{ getItemFromBackEnd, files }}>

@@ -5,46 +5,29 @@ const KanbanContext = createContext();
 const KanbanProvider = ({ children }) => {
   const [Kanban, setKanban] = useState({
     id: 0,
-    name: 'School',
-    section: ['To do', 'In progress', 'Done'],
-    task: [
-      {
-        name: 'Research car options',
-        description: 'Take some time to research different car models and features.',
-        Subtasks: ['Compare prices', 'Read customer reviews'],
-        category: 'To do',
-        priority: 'height',
-      },
-      {
-        name: 'Buy car wash',
-        description: 'I am planning to buy a new car.',
-        Subtasks: ['Contact bank for financing options', 'Schedule a test drive'],
-        category: 'Done',
-        priority: 'low',
-      },
-      {
-        name: 'Organize car insurance',
-        description: 'Contact insurance provider and arrange car insurance coverage.',
-        Subtasks: ['Gather necessary documents', 'Compare insurance plans'],
-        category: 'In progress',
-        priority: 'medium',
-      },
-    ],
+    name: 'Example',
+    section: [],
+    task: [],
   });
 
   const replaceTasks = (taskArray) => {
+    const token = localStorage.getItem('token');
     setKanban((prevKanban) => ({
       ...prevKanban,
       task: taskArray,
     }));
-    fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
+    console.log(JSON.stringify({
+      ...Kanban,
+      task: taskArray,
+    }))
+    fetch(`http://127.0.0.1:8888/files/${Kanban.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         ...Kanban,
         task: taskArray,
       }),
       headers: {
-        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -58,18 +41,24 @@ const KanbanProvider = ({ children }) => {
   };
 
   const replaceSections = (sectionArray) => {
+    console.log('replaceSections')
+    const token = localStorage.getItem('token');
     setKanban((prevKanban) => ({
       ...prevKanban,
       section: sectionArray,
     }));
-    fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
+    console.log(JSON.stringify({
+      ...Kanban,
+      section: sectionArray,
+    }))
+    fetch(`http://127.0.0.1:8888/files/${Kanban.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         ...Kanban,
         section: sectionArray,
       }),
       headers: {
-        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -83,12 +72,19 @@ const KanbanProvider = ({ children }) => {
   };
 
   const replaceTasksAndSections = (taskArray, sectionArray) => {
+    console.log('replaceTasksAndSections')
+    const token = localStorage.getItem('token');
     setKanban((prevKanban) => ({
       ...prevKanban,
       section: sectionArray,
       task: taskArray,
     }));
-    fetch(`http://127.0.0.1:3333/files/${Kanban.id}`, {
+    console.log(JSON.stringify({
+      ...Kanban,
+      section: sectionArray,
+      task: taskArray,
+    }))
+    fetch(`http://127.0.0.1:8888/files/${Kanban.id}`, {
       method: 'PATCH',
       body: JSON.stringify({
         ...Kanban,
@@ -96,7 +92,7 @@ const KanbanProvider = ({ children }) => {
         task: taskArray,
       }),
       headers: {
-        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

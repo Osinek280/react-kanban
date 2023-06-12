@@ -43,6 +43,13 @@ function Navbar({ onClose, onOpen, focus, from, name }) {
           </button>
         </>
       )}
+      {from === 'home' && (
+        <>
+          <button className="personal-data-btn" onClick={onOpen}>
+            Personal Data
+          </button>
+        </>
+      )}
     </header>
   );
 }

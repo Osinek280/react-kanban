@@ -4,13 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { KanbanContext } from '../KanbanContext';
 
-
 function AddEditTaskModal({ onClose, argument, category }) {
-
-  console.log(category)
-
-  const { Kanban, replaceTasks} = useContext(KanbanContext)
-
+  const { Kanban, replaceTasks } = useContext(KanbanContext);
   const sectionList = Kanban.section;
   const taskList = Kanban.task;
 
@@ -27,9 +22,10 @@ function AddEditTaskModal({ onClose, argument, category }) {
     date = argument;
   }
 
-  if(category !== undefined) date.category = category;
+  if (category !== undefined) date.category = category;
 
   const [priority, setPriority] = useState(date.priority);
+  const [subtasks, setSubtasks] = useState(date.Subtasks || []);
 
   const closeFromClick = (e) => {
     if (e.target.className === 'form-container') {
@@ -41,29 +37,43 @@ function AddEditTaskModal({ onClose, argument, category }) {
     setPriority(e.target.value);
   };
 
+  const handleSubtaskChange = (e, index) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks[index] = e.target.value;
+    setSubtasks(updatedSubtasks);
+  };
+
+  const addSubtask = () => {
+    setSubtasks([...subtasks, '']);
+  };
+
+  const removeSubtask = (index) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks.splice(index, 1);
+    setSubtasks(updatedSubtasks);
+  };
+
   const addSaveTask = (e) => {
     const NewTask = {
       id: argument !== 'create' ? argument : taskList.length,
       name: document.querySelector('#task-name-input').value,
       description: document.querySelector('#task-description-input').value,
-      Subtasks: Array.from(document.querySelectorAll('.form-input.subtask-input')).map((div) =>
-        div.value
-      ),
+      Subtasks: subtasks,
       category: document.querySelector('.form-select').value,
-      priority: priority,
+      priority: priority
     };
 
     if (argument === 'create') {
       replaceTasks([...taskList, NewTask]);
     } else {
-      const updatedTaskList = taskList.map(task => {
+      const updatedTaskList = taskList.map((task) => {
         if (task === argument) {
           return NewTask;
         }
         return task;
       });
-    
-      replaceTasks(updatedTaskList)      
+
+      replaceTasks(updatedTaskList);
     }
 
     onClose();
@@ -100,18 +110,25 @@ function AddEditTaskModal({ onClose, argument, category }) {
         {/* Subtasks */}
         <div className="form-group">
           <label className="form-label">Subtasks</label>
-          {date.Subtasks.map((item, index) => (
-            <div key={index} className="subtasks-container">
-              <input
-                type="text"
-                className="form-input subtask-input"
-                placeholder="e.g Take coffee break"
-                defaultValue={item}
-              />
-              <FontAwesomeIcon icon={faTimes} />
-            </div>
-          ))}
-          <button className="add-subtask-button">Add New Subtask</button>
+          {subtasks.length > 0 ? (
+            subtasks.map((item, index) => (
+              <div key={index} className="subtasks-container">
+                <input
+                  type="text"
+                  className="form-input subtask-input"
+                  placeholder="e.g Take coffee break"
+                  value={item}
+                  onChange={(e) => handleSubtaskChange(e, index)}
+                />
+                <FontAwesomeIcon icon={faTimes} onClick={() => removeSubtask(index)} />
+              </div>
+            ))
+          ) : (
+            <span className='subtask-empty-state'>No subtasks available!</span>
+          )}
+          <button className="add-subtask-button" onClick={addSubtask}>
+            Add New Subtask
+          </button>
         </div>
 
         {/* Priority */}

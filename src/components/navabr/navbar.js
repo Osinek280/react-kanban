@@ -43,7 +43,7 @@ function Navbar({ onClose, onOpen, focus, from, name }) {
           </button>
         </>
       )}
-      {from === 'home' && (
+      {from === 'home' && localStorage.getItem('token') && (
         <>
           <button className="personal-data-btn" onClick={onOpen}>
             Personal Data

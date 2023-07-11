@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../navabr/navbar";
 import "./Home.css";
-import KanbanImage from "../../image/erk695fjx3f5a9x7.svg"
+import KanbanImage from "../../image/erk695fjx3f5a9x7.svg";
 import LoginModal from "../loginModal/loginModal";
 import RegisterModal from "../registerModal/registerModal";
 import EditAccount from "../EditAccount/EditAccount";
@@ -26,7 +26,7 @@ function Home() {
 
   return (
     <div className="main-container">
-      <Navbar name={`Hello ${username}`} from={'home'} onOpen={() => {toggleModal('account')}} />
+      <Navbar name={`Hello ${username}`} from="home" onOpen={() => toggleModal('edit-account')} />
       <div className="home-container">
         <header className="home-header">What do you want to do today?</header>
         <div className="container">
@@ -41,22 +41,21 @@ function Home() {
                   <LoginModal toggleModal={toggleModal} />
                 ) : currentModal === "register" ? (
                   <RegisterModal toggleModal={toggleModal} />
-                ) : (
-                  <EditAccount />
-                )}
+                ) : null}
               </div>
+            ) : (
+              currentModal === 'edit-account' ? (
+                <EditAccount />
               ) : (
                 <div className="kanban-description">
                   <h2 className="kanban-description-header">What is Kanban Method?</h2>
                   <p>
-                    The Kanban Method is a means to design, manage, 
-                    and improve flow systems for knowledge work. 
-                    The method also allows organizations to start with 
-                    their existing workflow and drive evolutionary change. 
-                    They can do this by visualizing their flow of work, 
-                    limit work in progress (WIP) and stop starting and start finishing.
+                    The Kanban Method is a means to design, manage, and improve flow systems for knowledge work.
+                    The method also allows organizations to start with their existing workflow and drive evolutionary change.
+                    They can do this by visualizing their flow of work, limit work in progress (WIP), and stop starting and start finishing.
                   </p>
                 </div>
+              )
             )}
           </div>
         </div>
